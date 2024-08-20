@@ -11,3 +11,7 @@ create function getComputerChoice which select one of rock, paper, scissor rando
 create function getHumanChoice which gets human's choice
 
 create function playRound which make decision of who won, increment winner score and alert who win
+
+rock beats scissor
+scissor beat paper
+paper beats rock
