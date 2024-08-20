@@ -73,13 +73,10 @@ for(let i = 0; i < playTime; i++){
     humanChoice = getHumanChoice();
     computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
-    console.log(humanChoice);
-    console.log(computerChoice);
     //if it is tie, do not count it
     if(isItCount == false){
         playTime++;
     }
-    console.log(`i is ${i}`);
 }
 
 
