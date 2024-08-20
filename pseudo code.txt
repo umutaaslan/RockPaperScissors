@@ -1,0 +1,13 @@
+BEGIN
+
+create var humanChoice
+
+create var computerChoice
+
+create var humanScore
+create var computerScore
+
+create function getComputerChoice which select one of rock, paper, scissor randomly
+create function getHumanChoice which gets human's choice
+
+create function playRound which make decision of who won, increment winner score and alert who win
