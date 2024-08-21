@@ -1,4 +1,3 @@
-let playTime = getPlayTime(); 
 let isItCount = true;
 let humanChoice;
 let computerChoice = getComputerChoice();
@@ -7,14 +6,13 @@ let computerChoice = getComputerChoice();
 let humanScore = 0;
 let computerScore = 0;
 
-
-//get play time
+let playTime = getPlayTime();
 function getPlayTime() {
-   let result = prompt("How many time you wanna play");
-    if(typeof result == Number){
-        return result;
-    }
-    else {getPlayTime();}
+    let result = Number(prompt("How many time you wanna play"));
+   while (typeof result == Number) {
+    result = Number(prompt("How many time you wanna play"));
+   }
+   return result;
 }
 
 //get human choice
