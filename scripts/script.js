@@ -58,15 +58,11 @@ function playRound(humanChoice, computerChoice){
         alert("tie");
         isItCount = false;
     }
-    else if(humanChoice == "rock" && computerChoice == "scissor"){
-        humanWon();
-        isItCount = true;
-    }
-    else if(humanChoice == "scissor" && computerChoice == "paper"){
-        humanWon();
-        isItCount = true;
-    }
-    else if(humanChoice == "paper" && computerChoice == "rock"){
+    else if (
+        (humanChoice == "rock" && computerChoice == "scissor") ||
+        (humanChoice == "scissor" && computerChoice == "paper") ||
+        (humanChoice == "paper" && computerChoice == "rock")
+    ) {
         humanWon();
         isItCount = true;
     }
@@ -75,6 +71,8 @@ function playRound(humanChoice, computerChoice){
         isItCount = true;
     }
 }
+
+
 
 //play until play time is finish
 for(let i = 0; i < playTime; i++){
