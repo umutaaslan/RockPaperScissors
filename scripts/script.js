@@ -1,4 +1,4 @@
-let playTime = Number(prompt("How many time you wanna play")); 
+let playTime = getPlayTime(); 
 let isItCount = true;
 let humanChoice;
 let computerChoice = getComputerChoice();
@@ -7,10 +7,20 @@ let computerChoice = getComputerChoice();
 let humanScore = 0;
 let computerScore = 0;
 
+
+//get play time
+function getPlayTime() {
+   let result = prompt("How many time you wanna play");
+    if(typeof result == Number){
+        return result;
+    }
+    getPlayTime();
+}
+
 //get human choice
 function getHumanChoice(){
-    let userInput = prompt("which is your choice? (Rock, Paper, Scissor)");
-    if (userInput != null && userInput != undefined && userInput != ""){
+    let userInput = prompt("which is your choice? (Rock, Paper, Scissor)").toLowerCase();
+    if (userInput == "rock" || userInput == "paper" || userInput == "scissor"){
         return userInput;
     }
     else {
@@ -35,13 +45,13 @@ function getComputerChoice(){
 //if human won
 function humanWon(){
     humanScore += 1;
-    alert("YOU WON!");
+    alert(`YOU WON!\ncomputer's choice : ${computerChoice} `);
 }
 
 //if computer won
 function computerWon(){
     computerScore += 1;
-    alert("computer won");
+    alert(`computer won\ncomputer's choice : ${computerChoice}`);
 }
 
 //play round
