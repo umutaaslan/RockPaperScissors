@@ -14,7 +14,7 @@ function getPlayTime() {
     if(typeof result == Number){
         return result;
     }
-    getPlayTime();
+    else {getPlayTime();}
 }
 
 //get human choice
