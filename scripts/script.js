@@ -10,6 +10,10 @@ const tiePage = document.querySelector(".tiePage");
 const preGameDiv = document.querySelector(".preGame");
 const playDiv = document.querySelector(".play");
 const whoWonShower = document.querySelector(".whoWonShower");
+const rockImg = document.querySelector(".rockImg");
+const paperImg = document.querySelector(".paperImg");
+const scissorImg = document.querySelector(".scissorImg");
+const computersChoiceShower = document.querySelector(".computersChoiceShower");
 
 function addGlobalEventListener(type, selector, callback, parent = document){
     parent.addEventListener(type, e => {
@@ -21,7 +25,23 @@ function addGlobalEventListener(type, selector, callback, parent = document){
 buttonsRps.forEach(btn => {
     btn.addEventListener("click", e => {
         humanChoice = e.target.id;
-        document.querySelector(".userChoiceShower").textContent = e.target.id;
+        switch(e.target.id){
+            case "Rock":
+                rockImg.style = "display: block;";
+                paperImg.style = "display: none";
+                scissorImg.style = "display: none";
+                break;
+            case "Paper":
+                rockImg.style = "display: none;";
+                paperImg.style = "display: block";
+                scissorImg.style = "display: none";
+                break;
+            case "Scissor":
+                rockImg.style = "display: none;";
+                paperImg.style = "display: none";
+                scissorImg.style = "display: block";
+                break;
+        }
     })
 })
 
@@ -34,8 +54,7 @@ function getPlayTime() {
     playTime = Number(input.value);
     if (!isNaN(playTime) && playTime > 0) {
         preGameDiv.style = "display: none;"
-        playDiv.style = "display: block";
-        console.log(playTime);
+        playDiv.style = "display: flex";
     }
     else{
         input.value = "";
@@ -75,24 +94,51 @@ function getComputerChoice(){
     }
 }
 
+
+let cloneElement1;
+
+function computerChoiceShower(){
+    if(document.querySelector(".computersChoiceShower > img")) {
+        cloneElement1.remove();
+    }
+    switch(computerChoice){
+        case "Rock":
+            cloneElement1 = rockImg.cloneNode(true);
+            cloneElement1.style = "display: block;";
+            computersChoiceShower.appendChild(cloneElement1);
+            break;
+        case "Paper":
+            cloneElement1= paperImg.cloneNode(true);
+            cloneElement1.style = "display: block;";
+            computersChoiceShower.appendChild(cloneElement1);
+            break;
+        case "Scissor":
+            cloneElement1 = scissorImg.cloneNode(true);
+            cloneElement1.style = "display: block;";
+            computersChoiceShower.appendChild(cloneElement1);
+            break;
+    }
+}
+
 //if human won
 function humanWon(){
     humanScore += 1;
-    whoWonShower.textContent = (`YOU WON!\ncomputer's choice : ${computerChoice} `);
+    computerChoiceShower();
+    whoWonShower.textContent = "You won";
 }
-
 //if computer won
 function computerWon(){
     computerScore += 1;
-    whoWonShower.textContent = (`computer won\ncomputer's choice : ${computerChoice}`);
+    computerChoiceShower();
+    whoWonShower.textContent = "Computer won";
 }
 
 //play round
 function playRound(humanChoice, computerChoice){
     if(humanChoice === computerChoice){
-        console.log("tie");
         isItCount = false;
-        whoWonShower.textContent = "tie";
+        computerChoiceShower();
+        whoWonShower.textContent = "Tie";
     }
     else if (
         (humanChoice == "Rock" && computerChoice == "Scissor") ||
@@ -111,7 +157,14 @@ function playRound(humanChoice, computerChoice){
 let whoWon; 
 
 
+let scoreShower;
+function scoreShowerLastPage(){
+    scoreShower = document.createElement("p");
+    scoreShower.textContent = `Computer's score is: ${computerScore}, Your score is: ${humanScore}`;
+}
+
 let counter = 0;
+
 addGlobalEventListener("click", "#fight", e => {
     if (counter < playTime ){
         computerChoice = getComputerChoice();
@@ -131,12 +184,18 @@ addGlobalEventListener("click", "#fight", e => {
             switch(whoWon){
                 case "User":
                     userWonPage.style = "display: block;";
+                    scoreShowerLastPage();
+                    userWonPage.appendChild(scoreShower);
                 break;
                 case "Computer":
                     computerWonPage.style = "display: block;";
+                    scoreShowerLastPage();
+                    computerWonPage.appendChild(scoreShower);
                     break;
                 case "Tie":
                     tiePage.style = "display: block;";
+                    scoreShowerLastPage();
+                    tiePage.appendChild(scoreShower);
                     break;
             } 
             }, 3000);

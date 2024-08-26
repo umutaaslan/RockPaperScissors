@@ -85,5 +85,63 @@ html, body {
 
 
 .play {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.playText {
+    color: darkred;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.play button {
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    font-size: large;
+    font-weight: 600;
+    box-shadow: 0 6px #c7c7c7;
+}
+
+.play button:hover {
+    background-color: #00a40e;
+}
+
+.play button:active {
+    box-shadow: 0 2px;
+    background-color: #3e8e41;
+    transform: translateY(4px);
+}
+
+.weapons {
     display: flex;
+    gap: 30px;
+}
+
+#fight {
+    height: 40px;
+    width: 250px;
+}
+
+.play img {
+    display: none;
+    height: 50px;
+    width: 50px;
+    margin: 0;
+}
+
+#yourChoice {
+    color: darkred;
+    margin: 0;
+    font-size: 16px;
+}
+
+.play p {
+    margin: 0;
 }
