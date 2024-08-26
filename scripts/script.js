@@ -3,7 +3,7 @@ let humanChoice;
 let computerChoice = getComputerChoice();
 const input = document.querySelector("#playTime");
 const button = document.querySelector("#startPlay");
-const buttonsRps = document.querySelectorAll(".play > button");
+const buttonsRps = document.querySelectorAll("#Rock, #Paper, #Scissor");
 const userWonPage = document.querySelector(".userWonPage");
 const computerWonPage = document.querySelector(".computerWonPage");
 const tiePage = document.querySelector(".tiePage");
