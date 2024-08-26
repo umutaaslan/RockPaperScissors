@@ -1,67 +1,103 @@
 let isItCount = true;
 let humanChoice;
 let computerChoice = getComputerChoice();
+const input = document.querySelector("#playTime");
+const button = document.querySelector("#startPlay");
+const buttonsRps = document.querySelectorAll(".play > button");
+const userWonPage = document.querySelector(".userWonPage");
+const computerWonPage = document.querySelector(".computerWonPage");
+const tiePage = document.querySelector(".tiePage");
+const preGameDiv = document.querySelector(".preGame");
+const playDiv = document.querySelector(".play");
+const whoWonShower = document.querySelector(".whoWonShower");
+
+function addGlobalEventListener(type, selector, callback, parent = document){
+    parent.addEventListener(type, e => {
+        if(e.target.matches(selector)) callback(e);
+    })
+}
+
+//get human choice
+buttonsRps.forEach(btn => {
+    btn.addEventListener("click", e => {
+        humanChoice = e.target.id;
+        document.querySelector(".userChoiceShower").textContent = e.target.id;
+    })
+})
 
 
 let humanScore = 0;
 let computerScore = 0;
+let playTime;
 
-let playTime = getPlayTime();
 function getPlayTime() {
-    let result = Number(prompt("How many time you wanna play"));
-   while (typeof result == Number) {
-    result = Number(prompt("How many time you wanna play"));
-   }
-   return result;
+    playTime = Number(input.value);
+    if (!isNaN(playTime) && playTime > 0) {
+        preGameDiv.style = "display: none;"
+        playDiv.style = "display: block";
+        console.log(playTime);
+    }
+    else{
+        input.value = "";
+        input.focus();
+        alert("Please enter a number");
+    }
 }
 
-//get human choice
-function getHumanChoice(){
-    let userInput = prompt("which is your choice? (Rock, Paper, Scissor)").toLowerCase();
-    if (userInput == "rock" || userInput == "paper" || userInput == "scissor"){
-        return userInput;
+//get play time
+addGlobalEventListener("click", "#startPlay", e => {
+    getPlayTime();
+})
+
+input.addEventListener("keydown", e => {
+    if(e.key == "Enter") {
+        getPlayTime();
     }
-    else {
-        alert("please choose one");
-        getHumanChoice();
+})
+
+document.addEventListener("click", e => {
+    if(input.value !== "") {
+        input.focus();
     }
-}
+})
+
 
 //make random choice as computer choice
 function getComputerChoice(){
     let randomNumber = Math.floor(Math.random() * 3);
     switch(randomNumber){
         case 0:
-            return "rock";
+            return "Rock";
         case 1:
-            return "paper";
+            return "Paper";
         case 2:
-            return "scissor";    
+            return "Scissor";    
     }
 }
 
 //if human won
 function humanWon(){
     humanScore += 1;
-    alert(`YOU WON!\ncomputer's choice : ${computerChoice} `);
+    whoWonShower.textContent = (`YOU WON!\ncomputer's choice : ${computerChoice} `);
 }
 
 //if computer won
 function computerWon(){
     computerScore += 1;
-    alert(`computer won\ncomputer's choice : ${computerChoice}`);
+    whoWonShower.textContent = (`computer won\ncomputer's choice : ${computerChoice}`);
 }
 
 //play round
 function playRound(humanChoice, computerChoice){
     if(humanChoice === computerChoice){
-        alert("tie");
+        console.log("tie");
         isItCount = false;
+        whoWonShower.textContent = "tie";
     }
     else if (
-        (humanChoice == "rock" && computerChoice == "scissor") ||
-        (humanChoice == "scissor" && computerChoice == "paper") ||
-        (humanChoice == "paper" && computerChoice == "rock")
+        (humanChoice == "Rock" && computerChoice == "Scissor") ||
+        (humanChoice == "Scissor" && computerChoice == "Paper") ||
+        (humanChoice == "Paper" && computerChoice == "Rock")
     ) {
         humanWon();
         isItCount = true;
@@ -72,24 +108,44 @@ function playRound(humanChoice, computerChoice){
     }
 }
 
+let whoWon; 
 
 
-//play until play time is finish
-for(let i = 0; i < playTime; i++){
-    humanChoice = getHumanChoice();
-    computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice);
-    //if it is tie, do not count it
-    if(isItCount == false){
-        playTime++;
+let counter = 0;
+addGlobalEventListener("click", "#fight", e => {
+    if (counter < playTime ){
+        computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+        if(++counter === playTime){
+            document.querySelectorAll(".play button, .userChoiceShower").forEach(element => {
+                element.style = "display:none;";
+            });
+            setTimeout(() => {
+                whoWonShower.style = "display: block";
+            }, 500);
+            setTimeout(() => {
+                playDiv.style = "display: none;",
+            whoWon = (humanScore > computerScore) ? "User":
+            (computerScore > humanScore) ? "Computer":
+            "Tie";
+            switch(whoWon){
+                case "User":
+                    userWonPage.style = "display: block;";
+                break;
+                case "Computer":
+                    computerWonPage.style = "display: block;";
+                    break;
+                case "Tie":
+                    tiePage.style = "display: block;";
+                    break;
+            } 
+            }, 3000);
+        }
+        else counter--;
+        counter++;
     }
-}
+    if (isItCount == false) {
+        counter--;
+    }
+})
 
-
-alert(`your score is: ${humanScore}\ncomputer's score is: ${computerScore}`);
-
-let whoWon = (humanScore > computerScore) ? "YOU WOOOOOOOON!":
-(computerScore > humanScore) ? "Wow, computer won. You're such a loser":
-"Tie";
-
-alert(whoWon);
