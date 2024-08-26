@@ -25,18 +25,25 @@ function addGlobalEventListener(type, selector, callback, parent = document){
 buttonsRps.forEach(btn => {
     btn.addEventListener("click", e => {
         humanChoice = e.target.id;
+        e.target.setAttribute("style", "box-shadow: 0 2px; background-color: #3e8e41; transform: translateY(4px);" );
         switch(e.target.id){
             case "Rock":
+                buttonsRps[1].removeAttribute("style");
+                buttonsRps[2].removeAttribute("style");
                 rockImg.style = "display: block;";
                 paperImg.style = "display: none";
                 scissorImg.style = "display: none";
                 break;
             case "Paper":
+                buttonsRps[0].removeAttribute("style");
+                buttonsRps[2].removeAttribute("style");
                 rockImg.style = "display: none;";
                 paperImg.style = "display: block";
                 scissorImg.style = "display: none";
                 break;
             case "Scissor":
+                buttonsRps[0].removeAttribute("style");
+                buttonsRps[1].removeAttribute("style");
                 rockImg.style = "display: none;";
                 paperImg.style = "display: none";
                 scissorImg.style = "display: block";
@@ -135,7 +142,7 @@ function computerWon(){
 
 //play round
 function playRound(humanChoice, computerChoice){
-    if(humanChoice === computerChoice){
+    if(humanChoice == computerChoice){
         isItCount = false;
         computerChoiceShower();
         whoWonShower.textContent = "Tie";
