@@ -215,3 +215,6 @@ addGlobalEventListener("click", "#fight", e => {
     }
 })
 
+window.onbeforeunload = function(){
+    return true;
+  };
